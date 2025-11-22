@@ -4,6 +4,7 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { Slot } from 'expo-router';
+import '../../global.css';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
