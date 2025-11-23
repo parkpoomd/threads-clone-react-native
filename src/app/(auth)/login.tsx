@@ -1,0 +1,135 @@
+import { Link } from 'expo-router';
+import { useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError('Please fill in all fields');
+      return;
+    }
+
+    setError(null);
+    setLoading(true);
+
+    try {
+      // TODO: Implement login logic with Supabase
+      // const { error } = await supabase.auth.signInWithPassword({
+      //   email,
+      //   password,
+      // });
+      // if (error) throw error;
+      console.log('Login:', { email, password });
+    } catch (err: any) {
+      setError(err.message || 'Failed to login');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <SafeAreaView className="flex-1 bg-black">
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      >
+        <View className="flex-1 justify-center px-6">
+          {/* Header */}
+          <View className="mb-12">
+            <Text className="text-white text-4xl font-bold mb-2">
+              Welcome back
+            </Text>
+            <Text className="text-gray-400 text-base">Sign in to continue</Text>
+          </View>
+
+          {/* Form */}
+          <View className="mb-6">
+            {/* Email Input */}
+            <View className="mb-4">
+              <Text className="text-white text-sm font-medium mb-2">Email</Text>
+              <TextInput
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Email"
+                placeholderTextColor="#71767a"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoComplete="email"
+                className="bg-gray-900 text-white text-base px-4 py-4 rounded-lg border border-gray-800"
+              />
+            </View>
+
+            {/* Password Input */}
+            <View className="mb-6">
+              <Text className="text-white text-sm font-medium mb-2">
+                Password
+              </Text>
+              <TextInput
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Password"
+                placeholderTextColor="#71767a"
+                secureTextEntry
+                autoCapitalize="none"
+                autoComplete="password"
+                className="bg-gray-900 text-white text-base px-4 py-4 rounded-lg border border-gray-800"
+              />
+            </View>
+
+            {/* Error Message */}
+            {error && (
+              <View className="mb-4">
+                <Text className="text-red-500 text-sm">{error}</Text>
+              </View>
+            )}
+
+            {/* Login Button */}
+            <Pressable
+              onPress={handleLogin}
+              disabled={loading}
+              className={`py-4 rounded-lg ${
+                loading ? 'bg-gray-600' : 'bg-white active:bg-gray-200'
+              }`}
+            >
+              <Text
+                className={`text-center font-semibold text-base ${
+                  loading ? 'text-gray-400' : 'text-black'
+                }`}
+              >
+                {loading ? 'Signing in...' : 'Sign in'}
+              </Text>
+            </Pressable>
+          </View>
+
+          {/* Sign up link */}
+          <View className="flex-row justify-center items-center">
+            <Text className="text-gray-400 text-base">
+              Don't have an account?{' '}
+            </Text>
+            <Link href="/sign-up" asChild>
+              <Pressable>
+                <Text className="text-white font-semibold text-base">
+                  Create one
+                </Text>
+              </Pressable>
+            </Link>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+}
