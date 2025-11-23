@@ -38,168 +38,107 @@ export const users: User[] = [
   },
 ];
 
-const defaultUser = users[0];
+function getRandomUser(): User {
+  return users[Math.floor(Math.random() * users.length)];
+}
 
-export const posts: Post[] = [
+const postData = [
   {
     id: 'p1',
     createdAt: '2024-01-15T10:30:00Z',
     content:
       'Just shipped a new feature! 🎉 The team worked really hard on this one. Excited to see what you all think!',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p2',
     createdAt: '2024-01-15T11:00:00Z',
     content:
       'New design system is live! Clean, modern, and accessible. What do you think?',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p3',
     createdAt: '2024-01-15T12:15:00Z',
     content: 'Reading about the latest AI developments. The future is wild 🤖',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p4',
     createdAt: '2024-01-15T13:45:00Z',
     content:
       "Working on a new project that combines art and technology. Can't wait to share more!",
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p5',
     createdAt: '2024-01-15T14:20:00Z',
     content:
       'New track dropping next week! Been working on this for months. Hope you love it 🎶',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p6',
     createdAt: '2024-01-15T15:00:00Z',
     content:
       'Code review tip: Always explain the "why" not just the "what". Makes a huge difference!',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p7',
     createdAt: '2024-01-15T16:30:00Z',
     content:
       'Color theory is fascinating. The way colors interact and create emotion is pure magic ✨',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p8',
     createdAt: '2024-01-15T17:00:00Z',
     content: 'Just finished a marathon coding session. Time for some rest! 😴',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p9',
     createdAt: '2024-01-15T18:15:00Z',
     content:
       'The best code is code you never have to write. Simplicity wins every time.',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p10',
     createdAt: '2024-01-15T19:00:00Z',
     content:
       "Learning something new every day. That's what keeps this job exciting!",
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p11',
     createdAt: '2024-01-15T20:30:00Z',
     content:
       'Debugging is like being a detective in a crime movie where you are also the murderer.',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p12',
     createdAt: '2024-01-15T21:00:00Z',
     content: 'Coffee and code. The perfect combination ☕💻',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p13',
     createdAt: '2024-01-15T22:15:00Z',
     content:
       'Open source is amazing. So grateful for all the contributors out there!',
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p14',
     createdAt: '2024-01-15T23:00:00Z',
     content:
       "Refactoring legacy code is like archaeology. You never know what you'll find!",
-    user_id: defaultUser.id,
-    user: defaultUser,
-    parent_id: null,
-    parent: null,
-    replies: [],
   },
   {
     id: 'p15',
     createdAt: '2024-01-16T00:30:00Z',
     content: 'Good night, devs! Keep building amazing things 🌙',
-    user_id: defaultUser.id,
-    user: defaultUser,
+  },
+];
+
+export const posts: Post[] = postData.map((data) => {
+  const user = getRandomUser();
+  return {
+    ...data,
+    user_id: user.id,
+    user,
     parent_id: null,
     parent: null,
     replies: [],
-  },
-];
+  };
+});
