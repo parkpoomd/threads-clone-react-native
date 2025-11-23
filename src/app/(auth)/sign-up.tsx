@@ -1,6 +1,8 @@
+import { supabase } from '@/lib/supabase';
 import { Link } from 'expo-router';
 import { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -16,28 +18,30 @@ export default function SignUpScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
     if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
+      Alert.alert('Please enter an email and password');
     }
 
-    setError(null);
     setLoading(true);
 
-    try {
-      // TODO: Implement login logic with Supabase
-      // const { error } = await supabase.auth.signInWithPassword({
-      //   email,
-      //   password,
-      // });
-      // if (error) throw error;
-      console.log('Login:', { email, password });
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
-    } finally {
-      setLoading(false);
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      Alert.alert(error.message);
     }
+
+    if (!session) {
+      Alert.alert('Please check your inbox for email verification!');
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -45,7 +49,7 @@ export default function SignUpScreen() {
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
       >
         <View className="flex-1 justify-center px-6">
           {/* Header */}
@@ -99,7 +103,7 @@ export default function SignUpScreen() {
 
             {/* Login Button */}
             <Pressable
-              onPress={handleLogin}
+              onPress={handleSignUp}
               disabled={loading}
               className={`py-4 rounded-lg ${
                 loading ? 'bg-gray-600' : 'bg-white active:bg-gray-200'

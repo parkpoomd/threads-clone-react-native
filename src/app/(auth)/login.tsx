@@ -1,6 +1,8 @@
+import { supabase } from '@/lib/supabase';
 import { Link } from 'expo-router';
 import { useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -18,26 +20,21 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
+      Alert.alert('Please enter an email and password');
     }
 
-    setError(null);
     setLoading(true);
 
-    try {
-      // TODO: Implement login logic with Supabase
-      // const { error } = await supabase.auth.signInWithPassword({
-      //   email,
-      //   password,
-      // });
-      // if (error) throw error;
-      console.log('Login:', { email, password });
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
-    } finally {
-      setLoading(false);
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      Alert.alert(error.message);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -45,7 +42,7 @@ export default function LoginScreen() {
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
       >
         <View className="flex-1 justify-center px-6">
           {/* Header */}
