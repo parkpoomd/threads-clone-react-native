@@ -19,7 +19,7 @@ export default function PostListItem({ post }: { post: Post }) {
       {/* Avatar */}
       <View className="mr-3">
         <Image
-          source={{ uri: post.user.image }}
+          source={{ uri: post.user.avatar_url }}
           className="w-12 h-12 rounded-full"
         />
       </View>
@@ -32,7 +32,7 @@ export default function PostListItem({ post }: { post: Post }) {
             {post.user.username}
           </Text>
           <Text className="text-gray-500">
-            {dayjs(post.createdAt).fromNow()}
+            {dayjs(post.created_at).fromNow()}
           </Text>
         </View>
 
